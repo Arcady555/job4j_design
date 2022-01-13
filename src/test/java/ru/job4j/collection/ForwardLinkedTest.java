@@ -1,5 +1,6 @@
 package ru.job4j.collection;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -32,5 +33,17 @@ public class ForwardLinkedTest {
         assertThat(linked.deleteFirst(), is(1));
         Iterator<Integer> it = linked.iterator();
         assertThat(it.next(), is(2));
+    }
+
+    @Test
+    public void addFirst() {
+        ForwardLinked<Integer> linked = new ForwardLinked<>();
+        linked.addFirst(3);
+        linked.addFirst(2);
+        linked.addFirst(1);
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(3));
     }
 }
