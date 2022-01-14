@@ -8,8 +8,6 @@ public class SimpleQueue<T> {
     int sizeIn;
     int sizeOut;
 
-
-
     public T poll() {
         if (sizeOut == 0) {
             if (sizeIn == 0) {
