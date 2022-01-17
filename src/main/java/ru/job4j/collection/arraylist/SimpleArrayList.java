@@ -1,7 +1,5 @@
 package ru.job4j.collection.arraylist;
 
-import ru.job4j.collection.arraylist.List;
-
 import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
@@ -57,7 +55,7 @@ public class SimpleArrayList<T> implements List<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int index = 0;
-            private int expectedModCount = modCount;
+            private final int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
