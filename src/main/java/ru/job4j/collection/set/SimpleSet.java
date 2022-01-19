@@ -12,7 +12,7 @@ public class SimpleSet<T> implements Set<T> {
     @Override
     public boolean add(T value) {
         boolean rsl = false;
-        if (checkUnique(value)) {
+        if (!contains(value)) {
             set.add(value);
             rsl = true;
         }
@@ -21,23 +21,18 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public boolean contains(T value) {
-        return !checkUnique(value);
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return set.iterator();
-    }
-
-    private boolean checkUnique(T value) {
-        boolean rsl = true;
+        boolean rsl = false;
         for (T element : set) {
             if (Objects.equals(value, element)) {
-                rsl = false;
+                rsl = true;
                 break;
             }
         }
         return rsl;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return set.iterator();
+    }
 }
