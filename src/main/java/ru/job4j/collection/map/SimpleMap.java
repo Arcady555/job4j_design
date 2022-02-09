@@ -106,10 +106,18 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
             this.key = key;
             this.value = value;
         }
+
+        @Override
+        public String toString() {
+            return "MapEntry{" +
+                    "key=" + key +
+                    ", value=" + value +
+                    '}';
+        }
     }
 
     @Override
     public String toString() {
-        return  Arrays.deepToString(table);
+        return Arrays.deepToString(table);
     }
 }

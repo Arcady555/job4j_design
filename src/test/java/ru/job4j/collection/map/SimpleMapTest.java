@@ -19,9 +19,9 @@ public class SimpleMapTest {
         simpleMap.put(4556, "Arcady1");
         simpleMap.put(76565, "Pasha");
         String simpleMapString = simpleMap.toString();
-        String simpleMapString1 = "[null, null, null, ru.job4j.collection.map.SimpleMap$MapEntry@5d3411d, "
-                + "ru.job4j.collection.map.SimpleMap$MapEntry@2471cca7, null,"
-                + " ru.job4j.collection.map.SimpleMap$MapEntry@5fe5c6f, null]";
+        String simpleMapString1 = "[null, null, null, MapEntry{key=3426, value=Masha}, "
+                + "MapEntry{key=32456, value=Sasha}, null,"
+                + " MapEntry{key=4556, value=Arcady}, null]";
         Assert.assertEquals(simpleMapString, simpleMapString1);
     }
 
@@ -44,8 +44,8 @@ public class SimpleMapTest {
         simpleMap.put(76565, "Pasha");
         simpleMap.remove(4556);
         String simpleMapString = simpleMap.toString();
-        String simpleMapString1 = "[null, null, null, ru.job4j.collection.map.SimpleMap$MapEntry@6956de9,"
-                + " ru.job4j.collection.map.SimpleMap$MapEntry@769c9116, null,"
+        String simpleMapString1 = "[null, null, null, MapEntry{key=3426, value=Masha},"
+                + " MapEntry{key=32456, value=Sasha}, null,"
                 + " null, null]";
         Assert.assertEquals(simpleMapString, simpleMapString1);
     }
