@@ -109,10 +109,10 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
 
         @Override
         public String toString() {
-            return "MapEntry{" +
-                    "key=" + key +
-                    ", value=" + value +
-                    '}';
+            return "MapEntry{"
+                    + "key=" + key
+                    + ", value=" + value
+                    + '}';
         }
     }
 
