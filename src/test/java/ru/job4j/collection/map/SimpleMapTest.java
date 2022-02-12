@@ -18,11 +18,12 @@ public class SimpleMapTest {
         simpleMap.put(32456, "Sasha");
         simpleMap.put(4556, "Arcady1");
         simpleMap.put(76565, "Pasha");
-        String simpleMapString = simpleMap.toString();
-        String simpleMapString1 = "[null, null, null, MapEntry{key=3426, value=Masha}, "
-                + "MapEntry{key=32456, value=Sasha}, null,"
-                + " MapEntry{key=4556, value=Arcady}, null]";
-        Assert.assertEquals(simpleMapString, simpleMapString1);
+        String getValue1 = simpleMap.get(4556);
+        Assert.assertEquals(getValue1, "Arcady");
+        String getValue2 = simpleMap.get(3426);
+        Assert.assertEquals(getValue2, "Masha");
+        String getValue3 = simpleMap.get(32456);
+        Assert.assertEquals(getValue3, "Sasha");
     }
 
     @Test
@@ -36,6 +37,16 @@ public class SimpleMapTest {
     }
 
     @Test
+    public void getNull() {
+        SimpleMap<Integer, String> simpleMap = new SimpleMap<>();
+        simpleMap.put(4556, "Arcady");
+        simpleMap.put(3426, "Masha");
+        simpleMap.put(32456, "Sasha");
+        String getValue = simpleMap.get(4656);
+        Assert.assertNull(getValue);
+    }
+
+    @Test
     public void remove() {
         SimpleMap<Integer, String> simpleMap = new SimpleMap<>();
         simpleMap.put(4556, "Arcady");
@@ -43,11 +54,8 @@ public class SimpleMapTest {
         simpleMap.put(32456, "Sasha");
         simpleMap.put(76565, "Pasha");
         simpleMap.remove(4556);
-        String simpleMapString = simpleMap.toString();
-        String simpleMapString1 = "[null, null, null, MapEntry{key=3426, value=Masha},"
-                + " MapEntry{key=32456, value=Sasha}, null,"
-                + " null, null]";
-        Assert.assertEquals(simpleMapString, simpleMapString1);
+        String getValue = simpleMap.get(4556);
+        Assert.assertNull(getValue);
     }
 
     @Test

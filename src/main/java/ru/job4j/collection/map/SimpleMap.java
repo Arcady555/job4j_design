@@ -20,6 +20,10 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean rsl = false;
+        if (count > 0 && capacity / count >= LOAD_FACTOR - 0.1f & capacity / count <= LOAD_FACTOR + 0.1f) {
+            expand();
+            modCount++;
+        }
         int hashCode = key.hashCode();
         int index = indexFor(hash(hashCode));
         if (table[index] == null) {
@@ -28,11 +32,7 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
             count++;
             modCount++;
         }
-        float loadFactor = capacity / count;
-        if (loadFactor == LOAD_FACTOR) {
-            expand();
-            modCount++;
-        }
+
         return rsl;
     }
 
@@ -41,33 +41,42 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash(hash) % (table.length - 1);
+        return hash(hash) % (capacity - 1);
     }
 
     private void expand() {
-        MapEntry<K, V>[] newTable = new MapEntry[table.length * 2];
+        MapEntry<K, V>[] newTable = new MapEntry[capacity * 2];
         for (MapEntry<K, V> element : table) {
             newTable[indexFor(hash(element.key.hashCode()))] = new MapEntry<>(element.key, element.value);
         }
         table = newTable;
-
     }
 
     @Override
     public V get(K key) {
+        V rsl = null;
         int i = indexFor(hash(key.hashCode()));
+        if (table[i] == null) {
+            return null;
+        }
+        if (table[i].key.equals(key)) {
+            rsl = table[i].value;
+        }
         modCount++;
-        return table[i].value;
-
+        return rsl;
     }
 
     @Override
     public boolean remove(K key) {
+        boolean rsl = false;
         int i = indexFor(hash(key.hashCode()));
-        table[i] = null;
-        count--;
+        if (table[i].key.equals(key)) {
+            table[i] = null;
+            rsl = true;
+            count--;
+        }
         modCount++;
-        return true;
+        return rsl;
     }
 
     @Override
@@ -84,7 +93,7 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
                 while (index < table.length && table[index] == null) {
                     index++;
                 }
-                return index < table.length - 1;
+                return index < table.length;
             }
 
             @Override
