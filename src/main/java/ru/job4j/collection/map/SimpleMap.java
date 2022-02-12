@@ -20,7 +20,7 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean rsl = false;
-        if (count > 0 && capacity / count >= LOAD_FACTOR - 0.1f & capacity / count <= LOAD_FACTOR + 0.1f) {
+        if (count > capacity * LOAD_FACTOR) {
             expand();
             modCount++;
         }
@@ -45,7 +45,8 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
     }
 
     private void expand() {
-        MapEntry<K, V>[] newTable = new MapEntry[capacity * 2];
+        capacity = capacity * 2;
+        MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> element : table) {
             newTable[indexFor(hash(element.key.hashCode()))] = new MapEntry<>(element.key, element.value);
         }
@@ -54,16 +55,8 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
 
     @Override
     public V get(K key) {
-        V rsl = null;
         int i = indexFor(hash(key.hashCode()));
-        if (table[i] == null) {
-            return null;
-        }
-        if (table[i].key.equals(key)) {
-            rsl = table[i].value;
-        }
-        modCount++;
-        return rsl;
+        return table[i] != null && table[i].key.equals(key) ? table[i].value : null;
     }
 
     @Override
