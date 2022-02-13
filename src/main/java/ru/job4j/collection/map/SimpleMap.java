@@ -32,7 +32,6 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
             count++;
             modCount++;
         }
-
         return rsl;
     }
 
@@ -41,14 +40,16 @@ public class SimpleMap<K, V> implements MyMap<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash(hash) % (capacity - 1);
+        return hash % (capacity - 1);
     }
 
     private void expand() {
         capacity = capacity * 2;
         MapEntry<K, V>[] newTable = new MapEntry[capacity];
         for (MapEntry<K, V> element : table) {
-            newTable[indexFor(hash(element.key.hashCode()))] = new MapEntry<>(element.key, element.value);
+            if (element != null) {
+                newTable[indexFor(hash(element.key.hashCode()))] = element;
+            }
         }
         table = newTable;
     }
