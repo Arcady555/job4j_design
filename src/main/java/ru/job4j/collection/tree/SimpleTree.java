@@ -16,7 +16,7 @@ public class SimpleTree<E> implements Tree<E> {
     public boolean add(E parent, E child) {
         boolean rsl = false;
         if (findBy(parent).isPresent() && findBy(child).isEmpty()) {
-            root.children.add(new Node<>(child));
+            findBy(parent).get().children.add(new Node<>(child));
             rsl = true;
         }
         return rsl;
@@ -27,7 +27,7 @@ public class SimpleTree<E> implements Tree<E> {
         Optional<Node<E>> rsl = Optional.empty();
         Predicate<Node<E>> condition = s -> s.value.equals(value);
         if (findByPredicate(condition).isPresent()) {
-            rsl = Optional.of(new Node<>(value));
+            rsl = Optional.of(findByPredicate(condition).get());
         }
         return rsl;
     }
