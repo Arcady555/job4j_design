@@ -2,28 +2,24 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class LogFilter {
-    public List<String> filter(String file) {
-        List<String> list = new ArrayList<>();
+    public void filter(String file) {
+        final String string = "404";
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             Predicate<String> predicate = s -> {
                 String[] strings = s.split(" ");
-                return (strings[strings.length - 2].equals("404"));
+                return (strings[strings.length - 2].equals(string));
             };
-            list = bufferedReader.lines().filter(predicate).toList();
+            bufferedReader.lines().filter(predicate).forEach(System.out :: println);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return list;
     }
 
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
-        List<String> log = logFilter.filter("log.txt");
-        System.out.println(log);
+        logFilter.filter("log.txt");
     }
 }
