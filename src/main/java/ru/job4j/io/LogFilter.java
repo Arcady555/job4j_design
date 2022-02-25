@@ -10,7 +10,7 @@ public class LogFilter {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             Predicate<String> predicate = s -> {
                 String[] strings = s.split(" ");
-                return (strings[strings.length - 2].equals(string));
+                return (string.equals(strings[strings.length - 2]));
             };
             bufferedReader.lines().filter(predicate).forEach(System.out :: println);
         } catch (Exception e) {
