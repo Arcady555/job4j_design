@@ -16,7 +16,8 @@ public class Config {
 
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().filter(s -> !s.equals("")).filter(s -> s.contains("=")).forEach(s -> {
+            read.lines().filter(s -> !s.equals("")).filter(s -> s.contains("=")).
+                    filter(s -> !s.contains("#")).forEach(s -> {
                 String[] strings = s.split("=");
                 values.put(strings[0], strings[1]);
             });

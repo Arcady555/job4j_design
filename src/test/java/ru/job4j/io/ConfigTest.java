@@ -25,12 +25,4 @@ public class ConfigTest {
         assertThat(config.value(String.class.toString()), is(Matchers.nullValue()));
     }
 
-    /**
-    @Test (expected = IllegalArgumentException.class)
-    public void whenWrongForm() {
-        String path = "./data/test3.properties";
-        Config config = new Config(path);
-        config.load();
-    }
-    */
 }
