@@ -41,7 +41,5 @@ public class Analizy {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Analizy analizy = new Analizy();
-        analizy.unavailable("server.log", "target.txt");
     }
 }
