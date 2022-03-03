@@ -1,34 +1,34 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Analizy {
+    private static boolean serverOn = true;
     public void unavailable(String source, String target)  {
         try (BufferedReader read = new BufferedReader(new FileReader(source));
              PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
-            ArrayList<String[]> strings = new ArrayList<>();
-            StringBuilder print;
             read.lines().forEach(s -> {
+                String print = "";
                 String[] string = s.split(" ");
-                strings.add(string);
-            });
-            for (int i = 0; i < strings.size(); i++) {
-                if (Objects.equals(strings.get(i)[0], "400")
-                        || Objects.equals(strings.get(i)[0], "500")) {
-                    print = new StringBuilder(strings.get(i)[1] + ";");
-                    for (int j = i++; j < strings.size(); j++) {
-                        if (!Objects.equals(strings.get(j)[0], "400")
-                                && !Objects.equals(strings.get(j)[0], "500")) {
-                            print.append(strings.get(j)[1]);
-                            i = j;
-                            break;
-                        }
+                if (Objects.equals(string[0], "400") || Objects.equals(string[0], "500")) {
+                    if (serverOn) {
+                        print = string[1] + ";";
+                        out.printf("%s", print);
+                        serverOn = false;
+                    } else {
+                        out.print("");
                     }
-                    out.println(print);
+                } else {
+                    if (serverOn) {
+                        out.print("");
+                    } else {
+                        print += string[1];
+                        out.printf("%s%n", print);
+                        serverOn = true;
+                    }
                 }
-            }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
