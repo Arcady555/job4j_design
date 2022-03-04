@@ -14,7 +14,7 @@ public class Analizy {
                 if (Objects.equals(string[0], "400") || Objects.equals(string[0], "500")) {
                     if (serverOn) {
                         print = string[1] + ";";
-                        out.printf("%s", print);
+                        out.print(print);
                         serverOn = false;
                     } else {
                         out.print("");
@@ -23,7 +23,7 @@ public class Analizy {
                     if (serverOn) {
                         out.print("");
                     } else {
-                        print += string[1];
+                        print = string[1];
                         out.printf("%s%n", print);
                         serverOn = true;
                     }
