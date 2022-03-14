@@ -12,9 +12,9 @@ import java.util.Set;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
-    Set<FileProperty> set = new HashSet<>();
-    List<Path> listGen = new ArrayList<>();
-    List<Path> listRsl = new ArrayList<>();
+    private final Set<FileProperty> set = new HashSet<>();
+    private final List<Path> listGen = new ArrayList<>();
+    private final List<Path> listRsl = new ArrayList<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
