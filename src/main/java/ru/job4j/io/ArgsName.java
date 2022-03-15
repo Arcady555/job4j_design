@@ -17,16 +17,15 @@ public class ArgsName {
             throw new IllegalArgumentException();
         }
         for (String arg : args) {
-            if (arg.contains("=") && arg.startsWith("-")) {
-                String[] argString = arg.split("=", 2);
-                if (Objects.equals(argString[0], "") || Objects.equals(argString[1], "")) {
-                    throw new IllegalArgumentException();
-                }
-                argString[0] = argString[0].substring(1);
-                values.put(argString[0], argString[1]);
-            } else {
+            if (!arg.contains("=") && !arg.startsWith("-")) {
                 throw new IllegalArgumentException();
             }
+            String[] argString = arg.split("=", 2);
+            if (Objects.equals(argString[0], "") || Objects.equals(argString[1], "")) {
+                throw new IllegalArgumentException();
+            }
+            argString[0] = argString[0].substring(1);
+            values.put(argString[0], argString[1]);
         }
     }
 
