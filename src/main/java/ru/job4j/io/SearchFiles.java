@@ -29,7 +29,7 @@ public class SearchFiles implements FileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         if (condition.test(file)) {
-            paths.add(file.getFileName());
+            paths.add(file);
         }
         return FileVisitResult.CONTINUE;
     }

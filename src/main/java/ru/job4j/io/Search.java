@@ -11,12 +11,12 @@ public class Search {
     public static void main(String[] args) throws IOException {
         if (args.length == 0) {
             throw new IllegalArgumentException("Root folder is null. File extension not specified. "
-                    + "Usage java -jar dir.jar ROOT_FOLDER, FILE_EXTENSION");
+                    + "Usage java -jar dir.jar ROOT_FOLDER FILE_EXTENSION");
         }
 
         if (args.length == 1) {
             throw new IllegalArgumentException("File extension not specified. "
-                    + "Usage java -jar dir.jar ROOT_FOLDER, FILE_EXTENSION");
+                    + "Usage java -jar dir.jar ROOT_FOLDER FILE_EXTENSION");
         }
 
         String string = args[1];
