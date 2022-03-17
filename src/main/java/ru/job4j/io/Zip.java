@@ -26,7 +26,7 @@ public class Zip {
     private void validation(String[] args, Path path) {
         ArgsName argsName = ArgsName.of(args);
 
-        if (args.length < 3) {
+        if (args.length != 3) {
             throw new IllegalArgumentException("Usage "
                     + "java -jar target/zip.jar ROOT_FOLDER FILE_EXTENSION TARGET_FOLDER");
         }
