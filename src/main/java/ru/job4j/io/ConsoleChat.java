@@ -12,7 +12,7 @@ public class ConsoleChat {
     private static final String CONTINUE = "продолжить";
     private final String path;
     private final String botAnswers;
-    List<String> log = new ArrayList<>();
+    private final List<String> log = new ArrayList<>();
 
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
@@ -27,15 +27,15 @@ public class ConsoleChat {
         while (scanner.hasNext()) {
             String userAsk = scanner.nextLine();
             String phrase = listBot.get(random.nextInt(listBot.size()));
-            if (userAsk.equals(OUT)) {
+            if (OUT.equals(userAsk)) {
                 log.add(userAsk);
                 saveLog(log);
                 System.out.println("Our chat is over. Bye!");
                 return;
-            } else if (userAsk.equals(STOP)) {
+            } else if (STOP.equals(userAsk)) {
                 log.add(userAsk);
                 botCanAnswer = false;
-            } else if (userAsk.equals(CONTINUE)) {
+            } else if (CONTINUE.equals(userAsk)) {
                 log.add(userAsk);
                 botCanAnswer = true;
             }
