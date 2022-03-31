@@ -52,8 +52,8 @@ public class CSVReader {
 
     private static void validation(String[] args) {
         if (args.length != 4) {
-            throw new IllegalArgumentException("Usage java -jar dir.jar -path=ROOT_FOLDER -delimiter=SYMBOL" +
-                    "  -out=ROOT_FOLDER -filter=PARAMETER");
+            throw new IllegalArgumentException("Usage java -jar dir.jar -path=ROOT_FOLDER -delimiter=SYMBOL"
+                    + "  -out=ROOT_FOLDER -filter=PARAMETER");
         }
     }
 
