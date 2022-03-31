@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CSVReader {
-    public static void handle(ArgsName argsName) throws Exception {
+    public static void handle(ArgsName argsName) {
         String[] filters = argsName.get("filter").split(",");
         List<Integer> indexes = new ArrayList<>();
         List<String> rsl = new ArrayList<>();
@@ -50,7 +50,15 @@ public class CSVReader {
         }
     }
 
+    private static void validation(String[] args) {
+        if (args.length != 4) {
+            throw new IllegalArgumentException("Usage java -jar dir.jar -path=ROOT_FOLDER -delimiter=SYMBOL" +
+                    "  -out=ROOT_FOLDER -filter=PARAMETER");
+        }
+    }
+
     public static void main(String[] args) throws Exception {
+        validation(args);
         CSVReader.handle(ArgsName.of(args));
     }
 }
