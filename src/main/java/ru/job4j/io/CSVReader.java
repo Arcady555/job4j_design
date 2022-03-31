@@ -50,10 +50,17 @@ public class CSVReader {
         }
     }
 
-    private static void validation(String[] args) {
+    private static void validation(String[] args) throws FileNotFoundException {
+        ArgsName argsName = ArgsName.of(args);
         if (args.length != 4) {
-            throw new IllegalArgumentException("Usage java -jar dir.jar -path=ROOT_FOLDER -delimiter=SYMBOL"
-                    + "  -out=ROOT_FOLDER -filter=PARAMETER");
+            throw new IllegalArgumentException("Usage java -jar dir.jar -path=FILE -delimiter=SYMBOL"
+                    + "  -out=FILE -filter=PARAMETER");
+        }
+        if (!new File(argsName.get("Path")).exists()) {
+            throw new FileNotFoundException("File with specified path name does not exist");
+        }
+        if (!(argsName.get("Path")).endsWith(".csv")) {
+            throw new IllegalArgumentException("File must have CSV-extension");
         }
     }
 
