@@ -25,9 +25,9 @@ public class CSVReader {
             rsl.add(System.lineSeparator());
             while (scanner.hasNext()) {
                 String[] line = scanner.nextLine().split(";");
-                for (int index = 0; index < indexes.size(); index++) {
-                    rsl.add(line[index]);
-                    if (index < indexes.size() - 1) {
+                for (int i = 0; i < indexes.size(); i++) {
+                    rsl.add(line[indexes.get(i)]);
+                    if (i < indexes.size() - 1) {
                         rsl.add(";");
                     } else {
                         rsl.add(System.lineSeparator());
