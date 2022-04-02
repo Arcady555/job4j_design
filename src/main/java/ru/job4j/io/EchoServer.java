@@ -17,10 +17,6 @@ public class EchoServer {
                     System.out.println(str);
                     if (str.contains("?msg=Bye")) {
                         server.close();
-                    } else {
-                        for (str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
-                            System.out.println(str);
-                        }
                     }
                     out.flush();
                 }
