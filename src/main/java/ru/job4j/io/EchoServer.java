@@ -15,8 +15,12 @@ public class EchoServer {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     String str = in.readLine();
                     System.out.println(str);
-                    if (str.contains("?msg=Bye")) {
+                    if (str.contains("?msg=Exit")) {
                         server.close();
+                    } else {
+                        String[] lineMassage = str.split("msg=");
+                        String[] massage = lineMassage[1].split(" ");
+                        out.write((massage[0] + "\n").getBytes());
                     }
                     out.flush();
                 }
