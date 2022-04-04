@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public class UsageLog4j {
 
-    static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
     public static void main(String[] args) {
         byte byteVar = 5;
