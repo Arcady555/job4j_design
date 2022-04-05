@@ -1,4 +1,4 @@
-package ru.job4j.serialization.java;
+package ru.job4j.serialization;
 
 import java.io.*;
 import java.nio.file.Files;
