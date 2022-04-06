@@ -10,14 +10,14 @@ public class Subject {
     private final String name;
     private final int est;
     private final Contact contact;
-    private final String[] statuses;
+    private final String[] work;
 
-    public Subject(boolean orgOrNot, String name, int est, Contact contact, String[] statuses) {
+    public Subject(boolean orgOrNot, String name, int est, Contact contact, String[] work) {
         this.orgOrNot = orgOrNot;
         this.name = name;
         this.est = est;
         this.contact = contact;
-        this.statuses = statuses;
+        this.work = work;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Subject {
                 + ", name='" + name + '\''
                 + ", est=" + est
                 + ", contact=" + contact
-                + ", work=" + Arrays.toString(statuses)
+                + ", work=" + Arrays.toString(work)
                 + '}';
     }
 
