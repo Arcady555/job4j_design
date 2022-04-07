@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<subject orgOrNot="false" name="Arcady" est="1972">
+    <contact phone="11-111"/>
+    <works>
+        <work>Flash</work>
+        <work>Run</work>
+    </works>
+</subject>
