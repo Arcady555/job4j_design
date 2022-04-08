@@ -4,10 +4,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -25,6 +22,9 @@ public class Subject {
     @XmlAttribute
     private int est;
     private Contact contact;
+
+    @XmlElementWrapper(name = "works")
+    @XmlElement(name = "work")
     private String[] works;
 
     public Subject() { }
@@ -62,7 +62,9 @@ public class Subject {
             marshaller.marshal(subject, writer);
             firstRsl = writer.getBuffer().toString();
             System.out.println(firstRsl);
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Unmarshaller unmarshaller = context.createUnmarshaller();
         try (StringReader reader = new StringReader(firstRsl)) {
