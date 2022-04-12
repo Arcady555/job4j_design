@@ -1,13 +1,13 @@
 package ru.job4j.serialization.xml;
 
-import javax.xml.bind.JAXBContext;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @XmlRootElement(name = "subject")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -37,6 +37,26 @@ public class Subject {
         this.works = works;
     }
 
+    public boolean isOrgOrNot() {
+        return orgOrNot;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getEst() {
+        return est;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public String[] getWorks() {
+        return works;
+    }
+
     @Override
     public String toString() {
         return "Subject{"
@@ -50,26 +70,24 @@ public class Subject {
 
     public static void main(String[] args) throws JAXBException {
 
-        final Subject subject = new Subject(false, "Arcady", 1972,
-                new Contact("11-111"), "Flash", "Run");
+        JSONObject jsonContact = new JSONObject("{\"phone\":\"11-111\"}");
 
-        JAXBContext context = JAXBContext.newInstance(Subject.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String firstRsl = "";
+        List<String> list = new ArrayList<>();
+        list.add("Flash");
+        list.add("Run");
+        JSONArray jsonWorks = new JSONArray(list);
 
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(subject, writer);
-            firstRsl = writer.getBuffer().toString();
-            System.out.println(firstRsl);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        final Subject subject = new Subject(true, "ArtFederation",
+                2000, new Contact("+7(924)222-111-11-11"), "Rainbow", "Fire on the table", "Cry");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("orgOrNot", subject.isOrgOrNot());
+        jsonObject.put("name", subject.getName());
+        jsonObject.put("est", subject.getEst());
+        jsonObject.put("contact", jsonContact);
+        jsonObject.put("works", jsonWorks);
 
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (StringReader reader = new StringReader(firstRsl)) {
-            Subject secondRsl = (Subject) unmarshaller.unmarshal(reader);
-            System.out.println(secondRsl);
-        }
+        System.out.println(jsonObject);
+
+        System.out.println(new JSONObject(subject));
     }
 }
