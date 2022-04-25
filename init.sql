@@ -1,1 +1,1 @@
-\c init20220424
+create database init20220424
