@@ -31,11 +31,11 @@ select * from departments as d left join employees as e on
  e.departments_id = d.id
 where e.name is null;
 
-select * from departments as d left join employees as e on
+select e.name, d.name from departments as d left join employees as e on
   e.departments_id = d.id;
 
-select * from employees as e right join  departments as d on
- e.departments_id = d.id;
+select e.name, d.name from employees as e right join  departments as d on
+ d.id = e.departments_id
  
 create table teens(
 	id serial primary key,
