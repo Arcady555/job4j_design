@@ -51,5 +51,5 @@ left join car as c on c.engine_id = e.id
 where c.name is null;
 
 select t.numberVIN as КоробкаПередач from transmission as t
-left join car as c on c.engine_id = t.id
+left join car as c on c.transmission_id = t.id
 where c.name is null;
