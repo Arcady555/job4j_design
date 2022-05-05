@@ -1,6 +1,6 @@
 package ru.job4j.jdbc;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -28,44 +28,38 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void createTable(String tableName) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            String sql = String.format(
-                    "create table if not exists " + tableName + "(%s, %s);",
-                    "id serial primary key",
-                    "name varchar(255)"
-            );
-            statement.execute(sql);
-        }
+        String sql = String.format(
+                "create table if not exists " + tableName + "(%s);",
+                "id serial primary key"
+        );
+        textForDo(sql);
     }
 
     public void dropTable(String tableName) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            String sql = "drop table if exists " + tableName;
-            statement.execute(sql);
-        }
+        String sql = "drop table if exists " + tableName;
+        textForDo(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            String sql = "alter table " + tableName + " add " + columnName + " " + type + ";";
-            statement.execute(sql);
-        }
+        String sql = "alter table " + tableName + " add " + columnName + " " + type + ";";
+        textForDo(sql);
     }
 
     public void dropColumn(String tableName, String columnName) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            String sql = "alter table " + tableName + " drop column " + columnName + ";";
-            statement.execute(sql);
-        }
+        String sql = "alter table " + tableName + " drop column " + columnName + ";";
+        textForDo(sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws SQLException {
-        try (Statement statement = connection.createStatement()) {
-            String sql = "alter table " + tableName + " rename " + columnName + " to " + newColumnName + ";";
-            statement.execute(sql);
-        }
+        String sql = "alter table " + tableName + " rename " + columnName + " to " + newColumnName + ";";
+        textForDo(sql);
     }
 
+    private void textForDo(String text) throws SQLException {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(text);
+        }
+    }
 
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
         var rowSeparator = "-".repeat(30).concat(System.lineSeparator());
@@ -95,18 +89,23 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) throws Exception {
         Properties prop = new Properties();
-        prop.load(new FileInputStream("./data/test2.properties"));
-        TableEditor tableEditor = new TableEditor(prop);
-        tableEditor.createTable("demo_table");
-        System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
-        tableEditor.dropTable("demo_table");
-        tableEditor.createTable("demo_table");
-        tableEditor.addColumn("demo_table", "demo_column", "varchar(255)");
-        System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
-        tableEditor.dropColumn("demo_table", "demo_column");
-        System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
-        tableEditor.addColumn("demo_table", "demo_column", "varchar(255)");
-        tableEditor.renameColumn("demo_table", "demo_column", "new_demo_column");
-        System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
+        try (InputStream in = TableEditor.class.getClassLoader()
+                .getResourceAsStream("test2.properties")) {
+            prop.load(in);
+            try (TableEditor tableEditor = new TableEditor(prop);) {
+                tableEditor.createTable("demo_table");
+                System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
+                tableEditor.dropTable("demo_table");
+                tableEditor.createTable("demo_table");
+                tableEditor.addColumn("demo_table", "demo_column", "varchar(255)");
+                System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
+                tableEditor.dropColumn("demo_table", "demo_column");
+                System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
+                tableEditor.addColumn("demo_table", "demo_column", "varchar(255)");
+                tableEditor.renameColumn("demo_table",
+                        "demo_column", "new_demo_column");
+                System.out.println(getTableScheme(tableEditor.connection, "demo_table"));
+            }
+        }
     }
 }
