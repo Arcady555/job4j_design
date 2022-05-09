@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 
 public class ImportDB {
@@ -27,16 +26,14 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(s -> {
-                try {
                     String[] strings = s.split(";");
-                    if (strings.length != 2 || Objects.equals(strings[0], "") || !strings[1].contains("@")) {
+                    String s0 = strings[0];
+                    String s1 = strings[1];
+                    if (strings.length != 2 || s0.isBlank() || s1.isBlank() || !s1.contains("@")) {
                         throw new IllegalArgumentException();
                     }
-                    User user = new User(strings[0], strings[1]);
+                    User user = new User(s0, s1);
                     users.add(user);
-                } catch (IllegalArgumentException e) {
-                    System.out.println(s + "     --IllegalArgumentException! Not valid data!");
-                }
             });
         }
         return users;
