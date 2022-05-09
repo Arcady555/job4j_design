@@ -26,7 +26,7 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(s -> {
-                    String[] strings = s.split(";");
+                    String[] strings = s.split(";", 2);
                     String s0 = strings[0];
                     String s1 = strings[1];
                     if (strings.length != 2 || s0.isBlank() || s1.isBlank() || !s1.contains("@")) {
