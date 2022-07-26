@@ -69,12 +69,8 @@ public class AnalyzeByMap {
 
     private static void putMap(Map<String, Integer> map, Pupil pupil) {
         for (Subject subject : pupil.subjects()) {
-            int generalScore = 0;
-            if (map.get(subject.name()) != null) {
-                generalScore = map.get(subject.name());
-            }
-            generalScore += subject.score();
-            map.put(subject.name(), generalScore);
+            map.putIfAbsent(subject.name(), 0);
+            map.computeIfPresent(subject.name(), (key,value) -> value + subject.score());
         }
     }
 }
